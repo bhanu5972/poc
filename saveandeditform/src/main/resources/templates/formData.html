@@ -21,7 +21,7 @@
     <h3> Welcome Page</h3>
     <form action="#" th:action="@{/saveForm}"
 			th:object="${formData}" method="post">
-            <input type="text" maxlength="25"/>
+            <input type="text" th:field= "*{name}" maxlength="25"/>
     <input type="submit"></input>
     </form>
     <h4>All the existing records will be shown below</h4>

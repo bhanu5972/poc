@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -15,14 +18,29 @@ public class FormController {
     private static final Logger log = LoggerFactory.getLogger(FormController.class);
     @Autowired
     FormDataRepository formDataRepository;
+
+    @GetMapping("/getFormData")
+    public String getFormData(Model model){
+
+        FormData formData = new FormData();
+        model.addAttribute("formData", formData);
+
+        return "formData";
+
+    }
     @PostMapping("/saveForm")
     @Transactional
-    public String saveData(@ModelAttribute("formData") FormData formData, Model model) {
+    public String saveData(@Validated FormData formData, BindingResult bindingResult, Model model) {
 
         log.info("Saving Data");
-        formDataRepository.save(formData);
+        if(bindingResult.hasErrors()) {
 
-        return "index";
+            log.error("so many errors");
+        }
+        formDataRepository.save(formData);
+        model.addAttribute("formData", formData);
+
+        return "formData";
     }
 
 }
