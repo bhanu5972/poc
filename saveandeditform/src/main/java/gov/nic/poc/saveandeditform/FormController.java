@@ -24,7 +24,7 @@ public class FormController {
 
         FormData formData = new FormData();
         model.addAttribute("formData", formData);
-
+        
         return "formData";
 
     }
