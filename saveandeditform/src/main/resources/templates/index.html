@@ -2,13 +2,45 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 
 <head>
-
+    <link th:rel="stylesheet" type="text/css"
+	th:href="@{/webjars/bootstrap/4.6.0/css/bootstrap.min.css} " />
+	<script th:src="@{/webjars/jquery/jquery.min.js} "></script>
+	<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 </head>
-
+<style>
+    table {
+        counter-reset: tableCount;     
+    }
+    .counterCell:before {              
+        content: counter(tableCount); 
+        counter-increment: tableCount; 
+    }
+    </style>
 <body>
     <h3> Welcome Page</h3>
-    <input type="text"></input>
+    <form action="#" th:action="@{/saveForm}"
+			th:object="${formData}" method="post">
+            <input type="text" th:field = "*{name}"maxlength="25"/>
     <input type="submit"></input>
+    </form>
+    <h4>All the existing records will be shown below</h4>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>S.No</th>
+                <th>Stored value</th>
+                <th>update</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                        <td class="counterCell"></td>
+                            <td><span >
+                                    column 1 </span></td>
+                            <td><button type="button">Update</button></td>
+            </tr>
+        </tbody>
+    </table>
  </body>
 
 </html>
