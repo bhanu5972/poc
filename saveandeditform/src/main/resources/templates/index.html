@@ -7,6 +7,7 @@
 	th:href="@{/webjars/bootstrap/4.6.0/css/bootstrap.min.css} " />
 	<script th:src="@{/webjars/jquery/jquery.min.js} "></script>
 	<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    
 </head>
 <style>
     table {
@@ -21,7 +22,19 @@
     <h3> Welcome Page</h3>
     <form action="#" th:action="@{/saveForm}"
 			th:object="${formData}" method="post">
-            <input type="text" maxlength="25"/>
+            <input type="text" th:field= "*{name}" maxlength="25"/>
+            <input type = "checkbox" th:field="*{checkBoxValue}" data-toggle="switch"/>
+<br/>
+
+            <input type="radio" id="html" name="fav_language" value="HTML" th:field=" *{favoriteLanguage}">
+  <label for="html">HTML</label><br>
+  <input type="radio" id="css" name="fav_language" value="CSS" th:field=" *{favoriteLanguage}">
+  <label for="css">CSS</label><br>
+  <input type="radio" id="javascript" name="fav_language" value="JavaScript" th:field=" *{favoriteLanguage}">
+  <label for="javascript">JavaScript</label>
+
+
+
     <input type="submit"></input>
     </form>
     <h4>All the existing records will be shown below</h4>
@@ -34,9 +47,9 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
+            <tr th:each="row : ${formDataList}">
                         <td class="counterCell"></td>
-                            <td><span >
+                            <td><span th:text="${row.name}"></span>
                                     column 1 </span></td>
                             <td><button type="button">Update</button></td>
             </tr>
