@@ -1,5 +1,8 @@
 package gov.nic.poc.saveandeditform;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +14,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class FormController {
@@ -19,12 +23,28 @@ public class FormController {
     @Autowired
     FormDataRepository formDataRepository;
 
+    @RequestMapping({"/", "/home","/index"})
+    public String getIndexPage(Model model){
+
+        FormData formData = new FormData();
+        model.addAttribute("formData", formData);
+        Iterable<FormData> formDataIterator = formDataRepository.findAll();
+        List<FormData> formDataList = new ArrayList<FormData>();
+        formDataIterator.forEach(formDataList::add);
+        model.addAttribute("formDataList",formDataList);
+        return "formData";
+
+    }
+
     @GetMapping("/getFormData")
     public String getFormData(Model model){
 
         FormData formData = new FormData();
         model.addAttribute("formData", formData);
-        
+        Iterable<FormData> formDataIterator = formDataRepository.findAll();
+        List<FormData> formDataList = new ArrayList<FormData>();
+        formDataIterator.forEach(formDataList::add);
+        model.addAttribute("formDataList",formDataList);
         return "formData";
 
     }
